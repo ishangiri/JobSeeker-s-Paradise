@@ -54,7 +54,7 @@ export function SignUpForm({ onSubmit }: SignUpFormProps) {
                 Create Account
               </h2>
               <p className="text-gray-500 text-sm">
-                Join us today and get started
+                Join us today and get started to find your dream job
               </p>
             </div>
 
