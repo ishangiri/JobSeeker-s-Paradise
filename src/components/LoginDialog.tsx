@@ -13,7 +13,7 @@ export function LoginDialog  ({ onClick } : LoginDialogProps) {
     <Dialog>
       <DialogTrigger asChild>
         <Button className="bg-slate-700 text-white hover:bg-slate-900 transition-colors rounded-xl px-6 py-2 text-sm">
-          View Details
+          Apply Now
         </Button>
       </DialogTrigger>
       <DialogContent className="bg-slate-200  border-none  ">

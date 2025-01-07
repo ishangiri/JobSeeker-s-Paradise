@@ -41,14 +41,13 @@ export function SignUpForm({ onSubmit }: SignUpFormProps) {
     },
   });
 
-  const { handleSubmit } = form;
 
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 p-4">
       <div className="w-full max-w-lg">
         <Form {...form}>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-white/70 backdrop-blur-lg p-8 rounded-2xl shadow-xl border border-white/20">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 bg-white/70 backdrop-blur-lg p-8 rounded-2xl shadow-xl border border-white/20">
             <div className="space-y-2 text-center">
               <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                 Create Account
