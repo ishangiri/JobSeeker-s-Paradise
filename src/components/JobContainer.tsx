@@ -1,69 +1,69 @@
-'use client';
+import { BsCursorFill } from "react-icons/bs";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { LoginDialog } from "./LoginDialog";
 
-import React, { useEffect, useState } from 'react';
-import { Button } from './ui/button';
-import { BsCursorFill } from 'react-icons/bs';
-import fetchData from '@/utils/fetchData';
-
-const JobContainer = () => {
-  const [allJobs, setJobs] = useState<any[]>([]);
-
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const response = await fetchData.get('applicants/jobs');
-        setJobs(response.data.jobs);
-        
-      } catch (error) {
-        console.error('Error fetching jobs:', error);
-      } 
-    };
-
-    fetchJobs();
-  }, []);
-
-
-  return (
-    <div>
-   <div className='flex flex-wrap gap-6 justify-center'>
-     
-  
-      {allJobs.map((job) => {
-        const jobID = job._id;
-        const date = job.updatedAt;
-       const time =  new Date(date).toLocaleDateString();
-        return (
-          <div key={job._id}  className="border bg-gray-700 text-cyan-50 border-gray-700 sm:w-1/2 lg:w-1/3 rounded-xl p-6 m-6 w-full shadow-lg">
-          <section className="flex flex-col gap-6">
-          <div className="flex justify-between">
-            <p className="font-semibold">Position:</p>
-            <p>{job.position}</p>
-          </div>
-          <div className="flex justify-between">
-            <p className="font-semibold">Company:</p>
-            <p>{job.company}</p>
-          </div>
-          <div className="flex justify-between">
-            <p className="font-semibold">Job Type:</p>
-            <p>{job.jobType}</p>
-          </div>
-          
-          <div className="flex justify-between">
-          <div className='flex'><BsCursorFill/> <p>{job.jobLocation}</p></div>
-            <p className='font-semibold italic'>{time}</p>
-          </div>
-          <div className='flex justify-center items-center'>
-            <Button className='hover:bg-cyan-50 hover:text-slate-900 rounded-xl'>View Details</Button>
-          </div>
-
-        </section>
-        </div>
-        )
-      })}
-   
-    </div>
-    </div>
-  );
+type Job = {
+  _id: string;
+  position: string;
+  company: string;
+  jobType: string;
+  jobLocation: string;
+  updatedAt: string;
 };
 
-export default JobContainer;
+type JobContainerProps = {
+  allJobs: Job[];
+  onClick: () => void;
+};
+
+export default function JobContainer({ allJobs, onClick }: JobContainerProps) {
+  return (
+    <div className="flex flex-wrap gap-8 justify-center">
+      {allJobs.map((job) => {
+        const time = new Date(job.updatedAt).toLocaleDateString();
+        return (
+          <Card
+            key={job._id}
+            className="sm:w-1/2 lg:w-1/3 w-full m-8 bg-white text-gray-800 border border-blue-200 shadow-lg hover:shadow-xl transition-shadow rounded-xl"
+          >
+            <CardHeader className="bg-blue-50 p-4 rounded-t-xl">
+              <CardTitle className="text-lg font-semibold text-blue-800">
+                {job.position}
+              </CardTitle>
+              <CardDescription className="text-sm font-bold text-gray-600">
+                {job.company}
+              </CardDescription>
+              <CardDescription className="text-sm text-gray-600">
+              <div className="flex items-center gap-2 text-blue-600">
+                  <BsCursorFill />
+                  <p>{job.jobLocation}</p>
+                </div>
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-4 space-y-4">
+              <div className="flex justify-between items-center">
+                <p className="font-medium text-gray-700">Job Type:</p>
+                <p className="text-gray-900">{job.jobType}</p>
+              </div>
+              <div className="flex justify-between items-center">
+                <p className="font-medium text-gray-700">Posted At:</p>
+                <p className="text-sm text-gray-500 italic">{time}</p>
+              </div>
+            </CardContent>
+            <CardFooter className="flex justify-center bg-blue-50 p-4 rounded-b-xl">
+              <LoginDialog onClick={onClick} />
+            </CardFooter>
+          </Card>
+        );
+      })}
+    </div>
+  );
+}

@@ -4,6 +4,18 @@ interface AuthContextProps {
   children: React.ReactNode;
 }
 
+const isLoggedIn = async() => {
+  
+}
+
+
+const user = async() => {
+  
+}
+
+
+
+
 
 const AuthContext = createContext(null);
 
