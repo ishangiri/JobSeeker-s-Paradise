@@ -12,6 +12,7 @@ export default function Home() {
   const [allJobs, setJobs] = useState<any[]>([]);
   const [searchValue, setSearchValue] = useState("");
   const [filteredJobs, setFilteredJobs] = useState<any[]>([]); // To store filtered jobs
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -19,6 +20,7 @@ export default function Home() {
         const response = await fetchData.get('applicants/jobs');
         setJobs(response.data.jobs);
         setFilteredJobs(response.data.jobs); // Initialize filteredJobs
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching jobs:', error);
       }
@@ -59,7 +61,7 @@ export default function Home() {
     <div>
       <Navbar />
       <SearchBar value={searchValue} onChangeInputValue={onChangeValue} onClick={searchJobs} />
-      <JobContainer allJobs={filteredJobs} onClick={viewDetails} />
+      <JobContainer allJobs={filteredJobs} onClick={viewDetails} loading = {loading} />
     </div>
   );
 }
