@@ -18,6 +18,7 @@ type Job = {
   jobType: string;
   jobLocation: string;
   updatedAt: string;
+  salary : string;
 };
 
 type JobContainerProps = {
@@ -60,6 +61,11 @@ export default function JobContainer({ allJobs, onClick, loading }: JobContainer
                     <div className="flex items-center gap-2 text-blue-600">
                       <BsCursorFill />
                       <p>{job.jobLocation}</p>
+                    </div>
+                  </CardDescription>
+                  <CardDescription className="text-sm text-gray-600">
+                    <div className="flex items-center gap-2 text-blue-600">
+                      <p>{job.salary}</p>
                     </div>
                   </CardDescription>
                 </CardHeader>
