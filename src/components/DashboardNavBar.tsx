@@ -12,12 +12,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { User, Menu } from 'lucide-react';
+import fetchData from '@/utils/fetchData';
+import { useRouter } from 'next/navigation';
 
 const DashboardNavBar = () => {
+  const router = useRouter();
   const { setOpenMobile } = useSidebar();
   
-  const handleLogout = () => {
-    console.log("Logged out");
+  const handleLogout = async() => {
+    await fetchData.get("api/auth/logoutApplicant");
+    router.push('/');
   };
 
   return (
