@@ -6,8 +6,12 @@ import fetchData from '@/utils/fetchData';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from '@/components/ui/toast';
+import { useUser } from '@/context/authContext';
 
 const page = () => {
+
+
+  const {setAuthenticated} = useUser();
 
   const router = useRouter();
   const {toast} = useToast();
@@ -20,6 +24,7 @@ const page = () => {
           description: "Logged In Successfully",
         })
         router.push('/dashboard');
+        setAuthenticated(true);
 
      } catch(error){
       console.log(error);

@@ -10,6 +10,9 @@ import {
 } from "@/components/ui/card";
 import { LoginDialog } from "./LoginDialog";
 import { Skeleton } from "./ui/skeleton";
+import { useUser } from "@/context/authContext";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
 type Job = {
   _id: string;
@@ -28,6 +31,13 @@ type JobContainerProps = {
 };
 
 export default function JobContainer({ allJobs, onClick, loading }: JobContainerProps) {
+
+  
+  const {authenticated : loggedIn } = useUser();
+
+
+
+
   return (
     <div className="flex flex-wrap gap-8 justify-center">
       {loading
@@ -80,7 +90,11 @@ export default function JobContainer({ allJobs, onClick, loading }: JobContainer
                   </div>
                 </CardContent>
                 <CardFooter className="flex justify-center bg-blue-50 p-4 rounded-b-xl">
-                  <LoginDialog onClick={onClick} />
+                  {loggedIn ?
+                   <Button asChild className="bg-slate-800 text-white hover:bg-slate-900 hover:text-white rounded-xl" >
+                    <Link href={`dashboard/jobDetails/${job._id}`}>View Details</Link>
+                     </Button> :  
+                     <LoginDialog onClick={onClick} />}
                 </CardFooter>
               </Card>
             );
