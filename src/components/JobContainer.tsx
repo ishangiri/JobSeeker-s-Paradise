@@ -11,7 +11,7 @@ import {
 import { LoginDialog } from "./LoginDialog";
 import { Skeleton } from "./ui/skeleton";
 import { useUser } from "@/context/authContext";
-import { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
 
 type Job = {

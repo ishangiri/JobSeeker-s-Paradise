@@ -6,23 +6,34 @@ import { useRouter } from 'next/navigation';
 import fetchData from '@/utils/fetchData';
 import { useUser } from '@/context/authContext';
 import { useToast } from '@/hooks/use-toast';
-const page = () => {
+
+
+interface signUp{
+
+name: string,
+ lastName: string
+  email: string,
+  password: string,
+  location: string,
+}
+
+const Page = () => {
     
     const {toast} = useToast();
     const router = useRouter();
     const { setUserData, userData } = useUser();
 
-    const onsubmit = async(data: any) => {
+    const onsubmit = async(data: signUp) => {
        
        try{
          await fetchData.post('/api/otp/send-applicant-otp', data);
          setUserData(data);
          router.push('/otp');
-        }catch(error : any){
-            console.log(error);
+        }catch (err){
+            console.log(err);
             toast({
                 variant : "destructive",
-                title : error,
+                title : "Error",
                 description : "Something went wrong"
             })
         }
@@ -39,4 +50,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

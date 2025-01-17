@@ -6,14 +6,23 @@ import { useUser } from '@/context/authContext';
 import fetchData from '@/utils/fetchData';
 import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from '@/components/ui/toast';
-const page = () => {
+
+interface otp {
+    otp : string,
+}
+
+
+
+const Page = () => {
+
 
     const router = useRouter();
     const {userData} = useUser();
     const {toast} = useToast();
 
+    
 
-    const onsubmit = async(otp : any) => {
+    const onsubmit = async(otp : otp ) => {
         //combining the otp and userData
         const combinedData = { ...userData, ...otp };
         console.log(combinedData);
@@ -44,4 +53,4 @@ const page = () => {
 
 }
 
-export default page
+export default Page

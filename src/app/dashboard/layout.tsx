@@ -1,10 +1,10 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React from "react";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import DashboardNavBar from '@/components/DashboardNavBar';
 import DashboardSidebar from '@/components/DashboardSidebar';
 import { useUser } from '@/context/authContext';
-import fetchData from '@/utils/fetchData';
+
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     

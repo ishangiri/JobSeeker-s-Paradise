@@ -8,7 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from '@/components/ui/toast';
 import { useUser } from '@/context/authContext';
 
-const page = () => {
+const Page = () => {
 
 
   const {setAuthenticated} = useUser();
@@ -16,7 +16,7 @@ const page = () => {
   const router = useRouter();
   const {toast} = useToast();
 
-    const onsubmit = async(data: any) => {
+    const onsubmit = async(data :object) => {
      try{
       console.log(data);
       await fetchData.post('/api/auth/loginApplicant', data);
@@ -45,4 +45,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

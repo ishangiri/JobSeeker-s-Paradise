@@ -50,7 +50,7 @@ const OtpForm = ({ onSubmit }: OtpFormProps) => {
           <FormField
             control={form.control}
             name="otp"
-            render={({ field }) => (
+            render={() => (
               <FormItem>
                 <FormLabel>One-Time Password</FormLabel>
                 <FormControl>

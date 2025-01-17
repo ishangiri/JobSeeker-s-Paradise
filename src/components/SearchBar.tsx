@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 interface SearchBarProps {
     onClick : ()  => void ,
     onChangeInputValue : (e: React.ChangeEvent<HTMLInputElement>) => void ,
-    value : any,
+    value : string,
 }
  
 const SearchBar = ({onClick, onChangeInputValue, value} : SearchBarProps) => {
