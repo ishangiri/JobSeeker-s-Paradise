@@ -9,12 +9,11 @@ import { useToast } from '@/hooks/use-toast';
 
 
 interface signUp{
-
-name: string,
- lastName: string
-  email: string,
-  password: string,
-  location: string,
+   name: string,
+   lastName: string
+   email: string,
+   password: string,
+   location: string,
 }
 
 const Page = () => {
@@ -35,19 +34,18 @@ const Page = () => {
                 variant : "destructive",
                 title : "Error",
                 description : "Something went wrong"
-            })
+          })
         }
-    }
+       }
 
     useEffect(() => {
         if (userData) {
           console.log('Updated userData:', userData);
         }
       }, [userData]);
-    
   return (
     <div> <SignUpForm onSubmit={onsubmit} /></div>
   )
 }
 
-export default Page
+export default Page;

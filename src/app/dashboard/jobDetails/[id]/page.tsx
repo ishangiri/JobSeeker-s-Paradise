@@ -4,6 +4,7 @@ import JobDetails from '@/components/JobDetails';
 import fetchData from '@/utils/fetchData';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface Job {
     company: string;
@@ -17,6 +18,7 @@ interface Job {
 }
 
 export default function Page() {
+    const router = useRouter();
     const params = useParams();
     const { id } = params;
     const [job, setJob] = useState<Job | undefined>();
@@ -38,7 +40,7 @@ export default function Page() {
 
     const handleApply = () => {
         console.log("Applied");
-        
+        router.push(`/dashboard/jobDetails/apply/${id}`);
     }
 
     // Conditional rendering to handle undefined job state

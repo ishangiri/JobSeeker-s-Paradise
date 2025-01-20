@@ -70,7 +70,7 @@ export default function JobDetailsPage({company, position, salary, jobType, jobL
     
             <CardFooter className="flex-shrink-0 border-none bg-white">
               <Button 
-                className="w-full"
+                className="w-full bg-slate-700 text-white rounded-xl hover:bg-slate-950 hover:text-cyan-50"
                 size="lg"
                 onClick={handleApply}
               >
