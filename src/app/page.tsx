@@ -14,6 +14,7 @@ export default function Home() {
   const { jobs, loading } = useJobs();
   
   const [searchValue, setSearchValue] = useState("");
+  const [locationValue, setLocationValue] = useState("");
   const [filteredJobs, setFilteredJobs] = useState(jobs); // Initially show all jobs
 
 
@@ -30,16 +31,30 @@ export default function Home() {
     const filtered = jobs.filter(
       (job) =>
         job.position.toLowerCase().includes(searchValues) ||
-        job.company.toLowerCase().includes(searchValues)
+        job.company.toLowerCase().includes(searchValues) ||
+        job.jobLocation.toLowerCase().includes(searchValues)
     );
     setFilteredJobs(filtered);
   };
 
+  const onchangeInputLocationValue = (e: React.ChangeEvent<HTMLInputElement>): void => { 
+    setLocationValue(e.target.value);
+    const searchValues = e.target.value.toLowerCase();
+    const filtered = jobs.filter(
+      (job) =>
+        job.jobLocation.toLowerCase().includes(searchValues)
+    );
+    setFilteredJobs(filtered);
+  }
+
   const searchJobs = () => {
     if (searchValue.trim() === "") {
       setFilteredJobs(jobs); // Reset to all jobs if search is empty
-    } else {
-      const lowerCasedValue = searchValue.toLowerCase();
+    } else if(locationValue.trim() === ""){
+       setFilteredJobs(jobs);
+    }
+    else{
+      const lowerCasedValue = searchValue.toLowerCase() || locationValue.toLowerCase();
       const filtered = jobs.filter(
         (job) =>
           job.position.toLowerCase().includes(lowerCasedValue) ||
@@ -58,9 +73,11 @@ export default function Home() {
     <div>
       <Navbar />
       <SearchBar
-        value={searchValue}
+        searchValue={searchValue}
         onChangeInputValue={onChangeValue}
         onClick={searchJobs}
+        LocationValue={locationValue}
+        onchangeInputLocationValue={onchangeInputLocationValue}
       />
       <JobContainer
         allJobs={filteredJobs}

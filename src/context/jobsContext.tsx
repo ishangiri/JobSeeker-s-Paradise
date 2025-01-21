@@ -11,6 +11,9 @@ interface Job {
  jobDescription : string,
  _id : string,
  updatedAt : string
+ __v: number;
+ jobStatus : string,
+  createdAt : string,
 }
 
 interface jobsContextType {
