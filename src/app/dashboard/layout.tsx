@@ -4,13 +4,17 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import DashboardNavBar from '@/components/DashboardNavBar';
 import DashboardSidebar from '@/components/DashboardSidebar';
 import { useUser } from '@/context/authContext';
+import Unauthenticated from "@/components/Unauthenticated";
 
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     
-  const {name} = useUser();
-  
+  const {name, authenticated} = useUser();
 
+  
+if (!authenticated) {
+        return <Unauthenticated />;
+    }
   return (
     <SidebarProvider>
       <div className="flex h-screen w-full">
@@ -21,6 +25,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
       </div>
     </SidebarProvider>
+   
   );
 };
 

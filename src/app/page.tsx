@@ -6,12 +6,15 @@ import JobContainer from "@/components/JobContainer";
 import { useJobs } from "@/context/jobsContext";
 import { useRouter } from "next/navigation";
 import SearchBar from "@/components/SearchBar";
+import { useUser } from "@/context/authContext";
 
 export default function Home() {
   const router = useRouter();
   
   // Using context
   const { jobs, loading } = useJobs();
+  const {authenticated} = useUser();
+  
   
   const [searchValue, setSearchValue] = useState("");
   const [locationValue, setLocationValue] = useState("");
@@ -21,7 +24,10 @@ export default function Home() {
    // Update filteredJobs when jobs are fetched
    useEffect(() => {
     setFilteredJobs(jobs);
-  }, [jobs]);
+    if (authenticated) {
+      router.push("/dashboard");
+    }
+  }, [jobs, authenticated, router]);
 
 
   // Filter jobs based on search input
@@ -68,6 +74,9 @@ export default function Home() {
   const viewDetails = () => {
     router.push("/login");
   };
+
+
+
 
   return (
     <div>

@@ -29,8 +29,8 @@ const DashboardNavBar = ({name} : DashboardProps) => {
   
   const handleLogout = async() => {
     await fetchData.get("api/auth/logoutApplicant");
+   await setAuthenticated(false);
     router.push('/');
-    setAuthenticated(false);
   };
 
   return (

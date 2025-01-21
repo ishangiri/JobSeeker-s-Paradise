@@ -34,12 +34,13 @@ const SignInForm = ({onSubmit} : LoginFormProps) => {
 
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 p-4">
+    
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-500 to-slate-900 p-4">
       <div className="w-full max-w-lg">
         <Form {...form}>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-white/70 backdrop-blur-lg p-8 rounded-2xl shadow-xl border border-white/20">
             <div className="space-y-2 text-center">
-              <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              <h2 className="text-3xl font-bold bg-gradient-to-r from-slate-600 to-slate-800 bg-clip-text text-transparent">
                 Jobseekers Paradise
               </h2>
               <p className="text-gray-500 text-sm">
@@ -58,7 +59,7 @@ const SignInForm = ({onSubmit} : LoginFormProps) => {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="your.email@example.com"
+                        placeholder="Your Email"
                         {...field}
                         className="h-11 bg-white/50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                       />
@@ -83,7 +84,7 @@ const SignInForm = ({onSubmit} : LoginFormProps) => {
                           id="password"
                           type={showPassword ? "text" : "password"}
                           className="pl-10 pr-10 h-11 bg-white/50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                          placeholder="Enter your password"
+                          placeholder="Your Password"
                           {...field}
                         />
                         <button
@@ -116,14 +117,14 @@ const SignInForm = ({onSubmit} : LoginFormProps) => {
                   Remember me
                 </label>
               </div>
-              <a href="#" className="text-sm font-medium text-blue-600 hover:text-blue-500">
+              <a href="#" className="text-sm font-medium text-slate-600 hover:text-slate-900">
                 Forgot password?
               </a>
             </div>
   
             <Button
               type="submit"
-              className="w-full h-11 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 transform hover:scale-[1.02]"
+              className="w-full h-11 bg-gradient-to-r  from-slate-300 to-slate-900 text-white font-medium rounded-xl hover:from-slate-700 hover:to-slate-950 transition-all duration-200 transform hover:scale-[1.02]"
             >
               Sign In
             </Button>
@@ -133,7 +134,7 @@ const SignInForm = ({onSubmit} : LoginFormProps) => {
                 Don&apos;t have an account?{" "}
                 <Link 
                   href="/signup" 
-                  className="font-medium text-blue-600 hover:text-indigo-600 transition-colors duration-200"
+                  className="font-medium text-slate-800 hover:text-blue-900 transition-colors duration-200"
                 >
                   Sign up
                 </Link>
@@ -143,6 +144,7 @@ const SignInForm = ({onSubmit} : LoginFormProps) => {
         </Form>
       </div>
     </div>
+  
   );
   
 };

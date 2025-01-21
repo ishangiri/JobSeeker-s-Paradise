@@ -14,7 +14,8 @@ interface UserContextType {
   setUserData: (data: { name: string; lastName: string; email: string; password: string; location: string }) => void;
   name : string,
   authenticated : boolean,
-  setAuthenticated :  React.Dispatch<React.SetStateAction<boolean>>
+  setAuthenticated :  React.Dispatch<React.SetStateAction<boolean>>;
+  checkAuthentication : () => void;
 }
  
 
@@ -40,33 +41,30 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [userData, setUserData] = useState<{ name: string; lastName: string; email: string; password: string; location: string } | null>(null);
   const [authenticated, setAuthenticated] = useState(false);
 
+  const checkAuthentication = async() => {
+    //get the applicant if authentication is true and set the authentication state to true
+     try{
+       const response = await fetchData.get('/api/applicants/getApplicant');
+      const applicant = response.data.userWIthoutpass.name;
+    setName(applicant);
+    setAuthenticated(true);
+  }
+  //if authentication fails set the authentication state to false
+  catch(error){
+    console.log(error);
+    setAuthenticated(false);
+  }
+}
 
 
   useEffect(() => {
-
-    const checkAuthentication = async() => {
-      //get the applicant if authentication is true and set the authentication state to true
-       try{
-         const response = await fetchData.get('/api/applicants/getApplicant');
-        const applicant = response.data.userWIthoutpass.name;
-      setName(applicant);
-      setAuthenticated(true);
-    }
-    //if authentication fails set the authentication state to false
-    catch(error){
-      console.log(error);
-      setAuthenticated(false);
-    }
-  }
     checkAuthentication();
-
-
   },[authenticated])
 
 
  
   return (
-    <UserContext.Provider value={{ userData, setUserData, name, authenticated , setAuthenticated}}>
+    <UserContext.Provider value={{ userData, setUserData, name, authenticated , setAuthenticated, checkAuthentication}}>
       {children}
     </UserContext.Provider>
   );

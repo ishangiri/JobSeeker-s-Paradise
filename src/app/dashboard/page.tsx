@@ -1,89 +1,100 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import { Navbar } from "@/components/NavBar";
 import JobContainer from "@/components/JobContainer";
 import { useJobs } from "@/context/jobsContext";
 import { useRouter } from "next/navigation";
+import { useUser } from "@/context/authContext";
 import SearchBar from "@/components/SearchBar";
+import Unauthenticated from "@/components/Unauthenticated";
+import Loading from "../loading";
 
 export default function Home() {
-  const router = useRouter();
+    const router = useRouter();
+    const { jobs, loading: jobsLoading } = useJobs();
+    const { checkAuthentication, authenticated } = useUser();
+    const [searchValue, setSearchValue] = useState("");
+    const [locationValue, setLocationValue] = useState("");
+    const [filteredJobs, setFilteredJobs] = useState(jobs);
+   
+
+    // Check authentication on mount
+    useEffect(() => {
+        const verifyAuth = async () => {
+       
+            try {
+                await checkAuthentication();
+            } catch (error) {
+                console.error("Authentication check failed:", error);
+            } 
+          
+        };
+        verifyAuth();
+    }, []); // Remove dependencies to prevent infinite loop
+
+    // Update filtered jobs when jobs data changes or search criteria change
+    useEffect(() => {
+        filterJobs();
+    }, [jobs, searchValue, locationValue]);
+
+    const filterJobs = () => {
+        if (!jobs) return;
+        
+        let filtered = [...jobs];
+
+        // Apply search filter
+        if (searchValue.trim()) {
+            const searchTerm = searchValue.toLowerCase();
+            filtered = filtered.filter(job => 
+                job.position.toLowerCase().includes(searchTerm) ||
+                job.company.toLowerCase().includes(searchTerm)
+            );
+        }
+
+        // Apply location filter
+        if (locationValue.trim()) {
+            const locationTerm = locationValue.toLowerCase();
+            filtered = filtered.filter(job => 
+                job.jobLocation.toLowerCase().includes(locationTerm)
+            );
+        }
+
+        setFilteredJobs(filtered);
+    };
+
+    const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchValue(e.target.value);
+    };
+
+    const handleLocationInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setLocationValue(e.target.value);
+    };
+
+    const handleSearch = () => {
+        filterJobs();
+    };
+
+    const handleJobClick = () => {
+        console.log("Job clicked:");
+        // Add your job click handling logic here
+    };
+
   
-  // Using context
-  const { jobs, loading } = useJobs();
-  
-  const [searchValue, setSearchValue] = useState("");
-  const [locationValue, setLocationValue] = useState("");
-  const [filteredJobs, setFilteredJobs] = useState(jobs); // Initially show all jobs
 
-
-   // Update filteredJobs when jobs are fetched
-   useEffect(() => {
-    setFilteredJobs(jobs);
-  }, [jobs]);
-
-
-  // Filter jobs based on search input
-  const onChangeValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setSearchValue(e.target.value);
-    const searchValues = e.target.value.toLowerCase();
-    const filtered = jobs.filter(
-      (job) =>
-        job.position.toLowerCase().includes(searchValues) ||
-        job.company.toLowerCase().includes(searchValues) ||
-        job.jobLocation.toLowerCase().includes(searchValues)
+    return (
+        <div className="min-h-screen">
+            <SearchBar
+                searchValue={searchValue}
+                onChangeInputValue={handleSearchInputChange}
+                onClick={handleSearch}
+                LocationValue={locationValue}
+                onchangeInputLocationValue={handleLocationInputChange}
+            />
+            <JobContainer
+                allJobs={filteredJobs}
+                onClick={handleJobClick}
+                loading={jobsLoading}
+            />
+        </div>
     );
-    setFilteredJobs(filtered);
-  };
-
-  const onchangeInputLocationValue = (e: React.ChangeEvent<HTMLInputElement>): void => { 
-    setLocationValue(e.target.value);
-    const searchValues = e.target.value.toLowerCase();
-    const filtered = jobs.filter(
-      (job) =>
-        job.jobLocation.toLowerCase().includes(searchValues)
-    );
-    setFilteredJobs(filtered);
-  }
-
-  const searchJobs = () => {
-    if (searchValue.trim() === "") {
-      setFilteredJobs(jobs); // Reset to all jobs if search is empty
-    } else if(locationValue.trim() === ""){
-       setFilteredJobs(jobs);
-    }
-    else{
-      const lowerCasedValue = searchValue.toLowerCase() || locationValue.toLowerCase();
-      const filtered = jobs.filter(
-        (job) =>
-          job.position.toLowerCase().includes(lowerCasedValue) ||
-          job.company.toLowerCase().includes(lowerCasedValue) ||
-          job.jobLocation.toLowerCase().includes(lowerCasedValue)
-      );
-      setFilteredJobs(filtered);
-    }
-  };
-
-  const onCLick = () => {
-    console.log("Clicked");
-    
-  };
-
-  return (
-    <div>
-      <SearchBar
-        searchValue={searchValue}
-        onChangeInputValue={onChangeValue}
-        onClick={searchJobs}
-        LocationValue={locationValue}
-        onchangeInputLocationValue={onchangeInputLocationValue}
-      />
-      <JobContainer
-        allJobs={filteredJobs}
-        onClick={onCLick}
-        loading={loading}
-      />
-    </div>
-  );
 }
