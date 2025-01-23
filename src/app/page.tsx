@@ -7,6 +7,7 @@ import { useJobs } from "@/context/jobsContext";
 import { useRouter } from "next/navigation";
 import SearchBar from "@/components/SearchBar";
 import { useUser } from "@/context/authContext";
+import Loading from "./loading";
 
 export default function Home() {
   const router = useRouter();
@@ -24,10 +25,17 @@ export default function Home() {
    // Update filteredJobs when jobs are fetched
    useEffect(() => {
     setFilteredJobs(jobs);
-    if (authenticated) {
+  }, [jobs]);
+
+  useEffect(() => {
+    if ( authenticated) {
       router.push("/dashboard");
     }
-  }, [jobs, authenticated, router]);
+  }, [authenticated, router]);
+
+  if (loading) {
+    return <Loading />; // Show loader until auth check finishes
+  }
 
 
   // Filter jobs based on search input
@@ -71,9 +79,6 @@ export default function Home() {
     }
   };
 
-  const viewDetails = () => {
-    router.push("/login");
-  };
 
 
 
@@ -90,7 +95,6 @@ export default function Home() {
       />
       <JobContainer
         allJobs={filteredJobs}
-        onClick={viewDetails}
         loading={loading}
       />
     </div>

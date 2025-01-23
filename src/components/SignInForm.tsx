@@ -35,7 +35,7 @@ const SignInForm = ({onSubmit} : LoginFormProps) => {
 
   return (
     
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-500 to-slate-900 p-4">
+    <div className="flex items-center justify-center  p-4">
       <div className="w-full max-w-lg">
         <Form {...form}>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-white/70 backdrop-blur-lg p-8 rounded-2xl shadow-xl border border-white/20">

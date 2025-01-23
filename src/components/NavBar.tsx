@@ -13,9 +13,14 @@ export const Navbar = () => {
             <menu className='m-10'> 
             <p className='sm:text-3xl text-white'>Jobseekers Paradise</p>
             </menu>
-            <Button type='button' asChild className='bg-white hover:bg-cyan-50 hover:text-slate-900 text-slate-900 rounded-xl m-10'>
-               <Link href='/login'>Login / Sign Up</Link>
+            <div className='m-10 flex flex-row gap-3'>
+            <Button type='button' asChild className='bg-white hover:bg-cyan-50 hover:text-slate-900 text-slate-900 rounded-xl'>
+               <Link href='/login'>Login</Link>
             </Button>
+            <Button type='button' asChild className='bg-white hover:bg-cyan-50 hover:text-slate-900 text-slate-900 rounded-xl'>
+               <Link href='/signup'>Sign Up</Link>
+            </Button>
+            </div>
         </div>
     )
 }

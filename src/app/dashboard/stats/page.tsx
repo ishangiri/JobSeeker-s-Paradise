@@ -22,7 +22,7 @@ const Page = () => {
     const getApplicant = async () => {
       try {
         const response = await fetchData.get("/api/applicants/getApplicant");
-        console.log("API Response:", response.data); // Debug
+        console.log("API Response:", response.data); 
         setApplicant(response.data.userWIthoutpass);
       } catch (error) {
         console.error("Error fetching applicant data:", error);

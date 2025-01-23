@@ -1,17 +1,40 @@
 'use client';
 
 import SignInForm from '@/components/SignInForm';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import fetchData from '@/utils/fetchData';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from '@/components/ui/toast';
 import { useUser } from '@/context/authContext';
+import { useParams } from 'next/navigation';
+import JobApplyLogin from '@/components/JobApplyLogin';
 
 const Page = () => {
 
 
-  const {setAuthenticated, authenticated} = useUser();
+
+ const [jobtitle, setJobTitle] = useState<string>("");
+ const [company, setCompany] = useState<string>("");
+  const {id} = useParams();
+  const {setAuthenticated} = useUser();
+
+
+  useEffect(() => {
+    const fetchJob = async () => {
+        try {
+            const response = await fetchData.get(`/applicants/jobs/${id}`);
+            const job = response.data.job;
+            setJobTitle(job.position);
+            setCompany(job.company);
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    fetchJob();
+}, []);
 
   const router = useRouter();
   const {toast} = useToast();
@@ -23,7 +46,7 @@ const Page = () => {
         toast({
           description: "Logged In Successfully",
         })
-        router.push('/dashboard');
+        router.push(`/dashboard/jobDetails/${id}`);
         setAuthenticated(true);
 
      } catch(error){
@@ -38,15 +61,9 @@ const Page = () => {
 
     }
 
-    useEffect(() => {
-     if(authenticated){
-       router.push('/dashboard');
-     }
-    },[])
-
-
   return (
-    <div>
+    <div className='min-h-screen flex flex-col items-center justify-center'>
+       <JobApplyLogin position={jobtitle} company={company} />
         <SignInForm onSubmit={onsubmit} />
        
     </div>

@@ -27,10 +27,14 @@ const DashboardNavBar = ({name} : DashboardProps) => {
   const { setOpenMobile } = useSidebar();
   const {setAuthenticated} = useUser();
   
-  const handleLogout = async() => {
-    await fetchData.get("api/auth/logoutApplicant");
-   await setAuthenticated(false);
-    router.push('/');
+  const onLogout = async () => {
+    try {
+      await fetchData.get('/api/auth/logoutApplicant');
+    await  router.push('/');
+     await setAuthenticated(false); // Synchronously update the authenticated state
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   return (
@@ -60,7 +64,7 @@ const DashboardNavBar = ({name} : DashboardProps) => {
           <DropdownMenuContent align="end" className="bg-slate-800 text-cyan-200 border-slate-700">
             <DropdownMenuItem 
               className="cursor-pointer hover:bg-slate-700 hover:text-white focus:bg-slate-700 focus:text-white" 
-              onClick={handleLogout}
+              onClick={onLogout}
             >
               Sign out
             </DropdownMenuItem>

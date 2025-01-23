@@ -17,7 +17,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { LoginDialog } from "./LoginDialog";
 import { Skeleton } from "./ui/skeleton";
 import { useUser } from "@/context/authContext";
 import React, { useState } from "react";
@@ -35,11 +34,10 @@ type Job = {
 
 type JobContainerProps = {
   allJobs: Job[];
-  onClick: () => void;
   loading: boolean;
 };
 
-export default function JobContainer({ allJobs, onClick, loading }: JobContainerProps) {
+export default function JobContainer({ allJobs, loading }: JobContainerProps) {
   const { authenticated: loggedIn } = useUser();
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 6;
@@ -127,7 +125,9 @@ export default function JobContainer({ allJobs, onClick, loading }: JobContainer
                         <Link href={`dashboard/jobDetails/${job._id}`}>View Details</Link>
                       </Button>
                     ) : (
-                      <LoginDialog onClick={onClick} />
+                      <Button asChild className="bg-slate-800 text-white hover:bg-slate-900 hover:text-white rounded-xl">
+                        <Link href={`login/${job._id}`}>Apply now</Link>
+                      </Button>
                     )}
                   </CardFooter>
                 </Card>
