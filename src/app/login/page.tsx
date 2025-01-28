@@ -46,7 +46,7 @@ const Page = () => {
 
 
   return (
-    <div>
+    <div className=' flex justify-center items-center min-h-screen bg-gradient-to-br from-slate-300 to-slate-900 '>
         <SignInForm onSubmit={onsubmit} />
        
     </div>

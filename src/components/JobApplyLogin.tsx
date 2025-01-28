@@ -7,8 +7,8 @@ interface props {
 
 const JobApplyLogin = ( {position, company} : props ) => {
   return (
-    <div className='justify-center flex gap-1 flex-row align-middle sm:text-xl md:text-2xl lg:text-3xl'>
-Applying for <span className='font-bold'> {position} </span> at <span className='font-extrabold'> {company} </span>  
+    <div className='justify-center flex gap-2 flex-row align-middle sm:text-xl md:text-2xl lg:text-3xl'>
+Applying for <span className='font-bold'> {position}</span> at <span className='font-extrabold'> {company} </span>  
     </div>
   )
 }

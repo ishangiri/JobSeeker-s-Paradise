@@ -1,13 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Navbar } from "@/components/NavBar";
 import JobContainer from "@/components/JobContainer";
 import { useJobs } from "@/context/jobsContext";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/context/authContext";
 import SearchBar from "@/components/SearchBar";
-import Unauthenticated from "@/components/Unauthenticated";
-import Loading from "../loading";
+
 
 export default function Home() {
   const router = useRouter();

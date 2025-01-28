@@ -15,8 +15,8 @@ const SearchBar = ({onClick, onChangeInputValue, searchValue, LocationValue, onc
   return (
     <div className="flex items-center justify-center m-4">
     <div className="flex w-full  items-center justify-center space-x-2">
-      <Input onChange={onChangeInputValue} value={searchValue} placeholder="Search Jobs by KeyWords..."  className="rounded-xl w-[600px]"/>
-      <Input onChange={onchangeInputLocationValue} value={LocationValue} placeholder=  " Location..."  className="rounded-xl w-[200px]"/>
+      <Input onChange={onChangeInputValue} value={searchValue} placeholder="Search Jobs by KeyWords..."  className="rounded-xl sm:w-[600px] "/>
+      <Input onChange={onchangeInputLocationValue} value={LocationValue} placeholder=  " Location..."  className="rounded-xl sm:w-[200px]"/>
 
       <Button type="button" variant="secondary" onClick={onClick} className="bg-slate-700 hover:text-black text-white rounded-xl">Search</Button>
     </div>
