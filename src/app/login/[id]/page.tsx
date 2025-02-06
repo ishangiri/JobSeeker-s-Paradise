@@ -62,7 +62,7 @@ const Page = () => {
     }
 
   return (
-    <div className=' flex flex-col text-slate-200 justify-center items-center min-h-screen bg-gradient-to-br from-slate-300 to-slate-900 '>
+    <div className=' flex flex-col  justify-center items-center min-h-screen bg-gradient-to-br from-slate-300 to-slate-900 '>
        <JobApplyLogin position={jobtitle} company={company} />
         <SignInForm onSubmit={onsubmit} />
        
