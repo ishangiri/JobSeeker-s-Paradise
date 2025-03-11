@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     
-  const {name, authenticated} = useUser();
+  const {user, authenticated} = useUser();
   const router = useRouter();
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     <div className="flex h-screen w-full">
       <DashboardSidebar />
       <div className="flex-1 flex flex-col">
-        <DashboardNavBar name={name}/>
+        <DashboardNavBar name={user?.name}/>
         <main className="flex-1 bg-gray-100 p-6">{children}</main>
       </div>
     </div>

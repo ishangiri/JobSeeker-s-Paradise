@@ -12,7 +12,8 @@ interface UserContextType {
     location: string; 
   } | null;
   setUserData: (data: { name: string; lastName: string; email: string; password: string; location: string }) => void;
-  name : string,
+  setUser : React.Dispatch<React.SetStateAction<{ name: string; lastName: string; email: string; location: string, avatar : string}>>;
+  user : { name: string; lastName: string; email: string; location: string, avatar : string},
   authenticated : boolean,
   setAuthenticated :  React.Dispatch<React.SetStateAction<boolean>>;
   checkAuthentication : () => void;
@@ -37,7 +38,7 @@ interface UserProviderProps {
 
 export const UserProvider = ({ children }: UserProviderProps) => {
 
-  const [name, setName] = useState("");
+  const [user, setUser] = useState({name: '', lastName: '', email: '', location: '', avatar: ''});
   const [userData, setUserData] = useState<{ name: string; lastName: string; email: string; password: string; location: string } | null>(null);
   const [authenticated, setAuthenticated] = useState(false);
 
@@ -45,8 +46,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     //get the applicant if authentication is true and set the authentication state to true
      try{
        const response = await fetchData.get('/api/applicants/getApplicant');
-      const applicant = response.data.userWIthoutpass.name;
-    setName(applicant);
+      const applicant = response.data.userWIthoutpass;
+    setUser(applicant);
     setAuthenticated(true);
   }
   //if authentication fails set the authentication state to false
@@ -64,7 +65,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
  
   return (
-    <UserContext.Provider value={{ userData, setUserData, name, authenticated , setAuthenticated, checkAuthentication}}>
+    //here userData is the data that our user will provide when they sign up so that it is available to the otp component for api call.
+    <UserContext.Provider value={{ userData, setUserData, setUser, user, authenticated , setAuthenticated, checkAuthentication}}>
       {children}
     </UserContext.Provider>
   );

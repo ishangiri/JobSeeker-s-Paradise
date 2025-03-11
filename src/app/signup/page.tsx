@@ -1,12 +1,10 @@
 'use client';
-
 import React, {useEffect}from 'react'
 import { SignUpForm } from '@/components/SignUpForm'
 import { useRouter } from 'next/navigation';
 import fetchData from '@/utils/fetchData';
 import { useUser } from '@/context/authContext';
 import { useToast } from '@/hooks/use-toast';
-
 
 interface signUp{
    name: string,
