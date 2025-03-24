@@ -25,7 +25,6 @@ const NavigationItems = ({ onClick }: { onClick?: () => void }) => {
     { title: 'Jobs', url: '/dashboard', icon: Briefcase },
     { title: 'Stats', url: '/dashboard/stats', icon: BarChart },
     { title: 'Profile', url: '/dashboard/profile', icon: User },
-    { title: 'Settings', url: '/dashboard/settings', icon: Settings },
   ];
 
   return (
