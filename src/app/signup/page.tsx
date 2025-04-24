@@ -1,5 +1,5 @@
 'use client';
-import React, {useEffect}from 'react'
+import React, {useEffect, useState}from 'react'
 import { SignUpForm } from '@/components/SignUpForm'
 import { useRouter } from 'next/navigation';
 import fetchData from '@/utils/fetchData';
@@ -19,13 +19,19 @@ const Page = () => {
     const {toast} = useToast();
     const router = useRouter();
     const { setUserData, userData } = useUser();
+    const [isLoading, setIsLoading] = useState(false);
 
     const onsubmit = async(data: signUp) => {
        
        try{
+        setIsLoading(true);
          await fetchData.post('/api/otp/send-applicant-otp', data);
          setUserData(data);
+         setIsLoading(false);
          router.push('/otp');
+          toast({
+              title : "OTP Sent",
+              description : "Please check your email for the OTP" })
         }catch (err){
             console.log(err);
             toast({
@@ -42,7 +48,7 @@ const Page = () => {
         }
       }, [userData]);
   return (
-    <div> <SignUpForm onSubmit={onsubmit} /></div>
+    <div> <SignUpForm loading={isLoading} onSubmit={onsubmit} /></div>
   )
 }
 

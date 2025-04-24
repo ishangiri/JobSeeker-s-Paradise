@@ -18,6 +18,7 @@ interface SignUpFormProps {
       password: string
       location : string;
          }) => void;
+    loading?: boolean;
 }
 
 // Define schema using Zod
@@ -29,7 +30,7 @@ const loginSchema = z.object({
   location: z.string().nonempty("Location is required"),
 });
 
-export function SignUpForm({ onSubmit }: SignUpFormProps) {
+export function SignUpForm({ onSubmit, loading }: SignUpFormProps) {
   const form = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -49,7 +50,7 @@ export function SignUpForm({ onSubmit }: SignUpFormProps) {
       <Form {...form}>
   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 bg-white/70 backdrop-blur-lg p-8 rounded-2xl shadow-xl border border-white/20">
     <div className="space-y-2 text-center">
-      <h2 className="text-3xl font-bold bg-gradient-to-r from-slate-600 to-slate-900 bg-clip-text text-transparent">
+      <h2 className="text-3xl font-bold bg-gradient-to-r from-slate-600 to-slate-800 bg-clip-text text-transparent">
         Create Account
       </h2>
       <p className="text-gray-500 text-sm">
@@ -164,7 +165,7 @@ export function SignUpForm({ onSubmit }: SignUpFormProps) {
               type="submit"
               className="w-full h-11 bg-gradient-to-r from-slate-300 to-slate-900 text-white font-medium rounded-lg hover:from-slate-700 hover:to-slate-950 transition-all duration-200 transform hover:scale-[1.02]"
             >
-              Create Your Account
+              {loading? "Creating Your Account...." : "Create Your Account"}
             </Button>
 
             <div className="text-center">

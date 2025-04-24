@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Clock, Briefcase, MapPin } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import fetchData from "@/utils/fetchData";
 
 // Define the job details interface
 interface JobDetails {
@@ -35,17 +36,8 @@ const AppliedJobs: React.FC = () => {
     const fetchAppliedJobs = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:3000/api/applicants/getAppliedJobs", {
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-
-        if (!response.ok) throw new Error("Failed to fetch applied jobs");
-
-        const data = await response.json();
+        const response = await fetchData.get("/api/applicants/getAppliedJobs");
+        const data = response.data;
         setAppliedJobs(data.appliedJobs || []);
         setError(null);
       } catch (error) {

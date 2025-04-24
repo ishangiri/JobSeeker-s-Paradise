@@ -22,6 +22,7 @@ import {
 
 interface OtpFormProps {
   onSubmit: (data: { otp: string }) => void;
+  loading?: boolean;  
 }
 
 const FormSchema = z.object({
@@ -30,7 +31,7 @@ const FormSchema = z.object({
     .length(6, "Your one-time password must be 6 characters."),
 });
 
-const OtpForm = ({ onSubmit }: OtpFormProps) => {
+const OtpForm = ({ onSubmit, loading }: OtpFormProps) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -78,7 +79,7 @@ const OtpForm = ({ onSubmit }: OtpFormProps) => {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit">{loading? "Submitting.... " : "Submit"}</Button>
         </form>
       </div>
     </Form>

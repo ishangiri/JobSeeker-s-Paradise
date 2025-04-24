@@ -10,6 +10,7 @@ import { Form, FormField, FormItem, FormLabel, FormMessage, FormControl } from '
 
 interface LoginFormProps {
     onSubmit: (data: { email: string; password: string }) =>  void;
+    loading: boolean;
 }
 
 const formSchema = z.object({
@@ -17,9 +18,8 @@ const formSchema = z.object({
   password: z.string().min(8, 'Password must be at least 8 characters')
 });
 //passing the onsubmit function as a prop
-const SignInForm = ({onSubmit} : LoginFormProps) => {
+const SignInForm = ({onSubmit, loading} : LoginFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
-  
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -126,7 +126,7 @@ const SignInForm = ({onSubmit} : LoginFormProps) => {
               type="submit"
               className="w-full h-11 bg-gradient-to-r  from-slate-300 to-slate-900 text-white font-medium rounded-xl hover:from-slate-700 hover:to-slate-950 transition-all duration-200 transform hover:scale-[1.02]"
             >
-              Sign In
+            {loading? "Signing in..." : "Sign In"}
             </Button>
   
             <div className="text-center">

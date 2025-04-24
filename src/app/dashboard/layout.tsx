@@ -11,13 +11,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const {user, authenticated} = useUser();
   const router = useRouter();
 
-  useEffect(() => {
-    if(!authenticated){
-      router.push('/');
-    }
-  }, [authenticated, router])
 
-    
   return ( <SidebarProvider>
     <div className="flex h-screen w-full">
       <DashboardSidebar />

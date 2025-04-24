@@ -38,11 +38,14 @@ const Page = () => {
 
   const router = useRouter();
   const {toast} = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
     const onsubmit = async(data :object) => {
      try{
       console.log(data);
-      await fetchData.post('/api/auth/loginApplicant', data);
+      setIsLoading(true);
+      await fetchData.post('/api/auth/loginApplicant', data);4
+      setIsLoading(false);
         toast({
           description: "Logged In Successfully",
         })
@@ -64,7 +67,7 @@ const Page = () => {
   return (
     <div className=' flex flex-col  justify-center items-center min-h-screen bg-gradient-to-br from-slate-300 to-slate-900 '>
        <JobApplyLogin position={jobtitle} company={company} />
-        <SignInForm onSubmit={onsubmit} />
+        <SignInForm loading={isLoading} onSubmit={onsubmit} />
        
     </div>
   )

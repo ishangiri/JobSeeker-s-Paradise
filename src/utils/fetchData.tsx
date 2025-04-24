@@ -1,6 +1,6 @@
 import axios from "axios";
 const fetchData = axios.create({
-    baseURL : 'http://localhost:3000/',
+    baseURL : 'https://mern-real-dehi.onrender.com',
     withCredentials : true,
 })
 
