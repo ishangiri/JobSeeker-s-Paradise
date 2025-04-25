@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
         pathname: '/**', // Allows all paths under this hostname
       },
     ],
-  }
+  },
 };
 
 export default nextConfig;
