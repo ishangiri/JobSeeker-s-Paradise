@@ -4,6 +4,7 @@ import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
+import React from 'react';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -21,6 +22,9 @@ export default [
     languageOptions: {
       parser: tsParser,
       sourceType: 'module',
+      globals : {
+        React: 'readonly',
+      }
     },
     plugins: {
       '@typescript-eslint': typescriptEslint,

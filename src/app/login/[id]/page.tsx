@@ -44,7 +44,7 @@ const Page = () => {
      try{
       console.log(data);
       setIsLoading(true);
-      await fetchData.post('/api/auth/loginApplicant', data);4
+      await fetchData.post('/api/auth/loginApplicant', data);
       setIsLoading(false);
         toast({
           description: "Logged In Successfully",
