@@ -1,15 +1,13 @@
 'use client';
-import React, { useEffect } from "react";
+import React from "react";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import DashboardNavBar from '@/components/DashboardNavBar';
 import DashboardSidebar from '@/components/DashboardSidebar';
 import { useUser } from '@/context/authContext';
-import { useRouter } from "next/navigation";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     
-  const {user, authenticated} = useUser();
-  const router = useRouter();
+  const {user} = useUser();
 
 
   return ( <SidebarProvider>

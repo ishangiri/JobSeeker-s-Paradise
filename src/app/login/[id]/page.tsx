@@ -34,7 +34,7 @@ const Page = () => {
     };
 
     fetchJob();
-}, []);
+}, [id]);
 
   const router = useRouter();
   const {toast} = useToast();

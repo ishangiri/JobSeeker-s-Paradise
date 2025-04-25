@@ -15,7 +15,7 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { DialogTitle } from '@radix-ui/react-dialog';
-import { Briefcase, BarChart, User, Settings } from 'lucide-react';
+import { Briefcase, BarChart, User } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 

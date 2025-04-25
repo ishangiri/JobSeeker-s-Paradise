@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Clock, Briefcase, MapPin } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import fetchData from "@/utils/fetchData";
+import Image from "next/image";
 
 // Define the job details interface
 interface JobDetails {
@@ -75,8 +76,9 @@ const AppliedJobs: React.FC = () => {
         hour: "2-digit",
         minute: "2-digit",
       });
-    } catch (e) {
-      return dateString;
+    } catch (err) {
+      console.error("Error formatting date:", err);
+      return "Invalid date";
     }
   };
 
@@ -108,6 +110,7 @@ const AppliedJobs: React.FC = () => {
                 <TableRow>
                   <TableHead className="font-medium">Position</TableHead>
                   <TableHead className="font-medium">Company</TableHead>
+                  <TableHead className="font-medium">Job Type</TableHead>
                   <TableHead className="font-medium">Status</TableHead>
                   <TableHead className="font-medium hidden md:table-cell">Location</TableHead>
 
@@ -127,7 +130,9 @@ const AppliedJobs: React.FC = () => {
                       <TableCell>
                         <div className="flex items-center">
                           {job.jobDetails.avatar ? (
-                            <img
+                            <Image
+                            width={16}
+                            height={16}
                               src={job.jobDetails.avatar}
                               alt="Company Avatar"
                               className="w-4 h-4 mr-2 rounded-full object-cover"
@@ -137,6 +142,9 @@ const AppliedJobs: React.FC = () => {
                           )}
                           {job.jobDetails.company || "Unknown Company"}
                         </div>
+                      </TableCell>
+                      <TableCell>
+                        {getJobTypeBadge(job.jobDetails.jobType || "Unknown")}
                       </TableCell>
                       <TableCell>{getStatusBadge(job.status)}</TableCell>
                       <TableCell className="hidden md:table-cell">

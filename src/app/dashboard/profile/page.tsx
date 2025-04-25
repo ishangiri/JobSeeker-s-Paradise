@@ -18,7 +18,7 @@ const formSchema = z.object({
   }),
 });
 
-const page: React.FC = () => {
+export default function Page(){
   const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -110,4 +110,3 @@ const page: React.FC = () => {
   );
 };
 
-export default page;

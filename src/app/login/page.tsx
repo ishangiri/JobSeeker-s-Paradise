@@ -5,7 +5,6 @@ import React, { useEffect } from 'react'
 import fetchData from '@/utils/fetchData';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
-import { ToastAction } from '@/components/ui/toast';
 import { useUser } from '@/context/authContext';
 
 const Page = () => {

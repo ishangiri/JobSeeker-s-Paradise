@@ -2,12 +2,10 @@
 import React, { useState, useEffect } from "react";
 import JobContainer from "@/components/JobContainer";
 import { useJobs } from "@/context/jobsContext";
-import { useRouter } from "next/navigation";
 import SearchBar from "@/components/SearchBar";
 
 
 export default function Home() {
-  const router = useRouter();
   const { jobs, loading: jobsLoading } = useJobs();
   const [searchValue, setSearchValue] = useState("");
   const [locationValue, setLocationValue] = useState("");
@@ -59,3 +57,5 @@ export default function Home() {
     </div>
   );
 }
+
+

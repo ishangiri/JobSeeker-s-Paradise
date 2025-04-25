@@ -4,13 +4,11 @@ import { useParams } from 'next/navigation';
 import ResumeUploadForm from '@/components/JobApply';
 import fetchData from '@/utils/fetchData';
 import { useToast } from '@/hooks/use-toast';
-import { useRouter } from 'next/navigation';
-import { Briefcase, Building2 } from 'lucide-react';
+import { Briefcase } from 'lucide-react';
 
-export default function page() {
+export default function Page() {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const params = useParams();
-  const router = useRouter();
   const {id} = params;
   const {toast} = useToast();
   const [isUploading, setUploading] = useState(false);
