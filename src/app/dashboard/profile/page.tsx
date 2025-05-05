@@ -8,6 +8,7 @@ import fetchData from '@/utils/fetchData';
 import { useUser } from '@/context/authContext';
 import { toast } from 'react-toastify';
 
+
 // Form schema definition
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -17,6 +18,8 @@ const formSchema = z.object({
     message: 'Location must be at least 2 characters.',
   }),
 });
+
+
 
 export default function Page(){
   const [isLoading, setIsLoading] = useState(true);
@@ -63,7 +66,7 @@ export default function Page(){
       toast.success('Applicant updated successfully!');
       // Update user context with new avatar
       setUser({ ...user, avatar: response.data.avatar }); // Assuming response includes updated avatar URL
-    } catch (err: any) {
+    } catch (err: string | any) {
       console.error(err);
       toast.error(err?.response?.data?.message || 'Failed to upload avatar.');
     }
