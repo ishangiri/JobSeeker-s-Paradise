@@ -30,12 +30,13 @@ const Page = () => {
         router.push('/dashboard');
         setAuthenticated(true);
 
-     } catch(error){
+     } catch(error : any){
       console.log(error);
       toast({
-        title: "Uh oh! Something went wrong.",
+        title: `${error?.response?.data.msg}`,
         description: "There was a problem with your request.",
       })
+      setIsLoading(false);
      }
 
     }

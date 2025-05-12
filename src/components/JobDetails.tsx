@@ -61,7 +61,7 @@ export default function JobDetailsPage({company, position, salary, jobType, jobL
               <div className="flex-grow overflow-hidden">
                 <h3 className="text-lg font-semibold mb-2">Job Description</h3>
                 <div className="overflow-y-auto pr-4 h-[calc(100%-2rem)] custom-scrollbar">
-                  <p className="text-gray-600 whitespace-pre-line text-xs  sm:text-sm  md:text-lg">
+                  <p className="text-gray-600 whitespace-pre-line text-base md:text-lg">
                     {jobDescription}
                   </p>
                 </div>
