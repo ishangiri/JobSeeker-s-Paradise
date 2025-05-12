@@ -41,12 +41,6 @@ const Page = () => {
 
     }
 
-    useEffect(() => {
-     if(authenticated){
-       router.push('/dashboard');
-     }
-    },[])
-
 
     return (
       <div className="relative min-h-screen flex flex-col space-y-10 items-center justify-center overflow-hidden">
