@@ -1,7 +1,7 @@
 'use client';
 
 import SignInForm from '@/components/SignInForm';
-import React, { useEffect } from 'react'
+import React from 'react'
 import fetchData from '@/utils/fetchData';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
@@ -12,7 +12,7 @@ import CompanyMessage from '@/components/CompanyMessage';
 const Page = () => {
 
 
-  const {setAuthenticated, authenticated} = useUser();
+  const {setAuthenticated} = useUser();
 
   const router = useRouter();
   const {toast} = useToast();
