@@ -86,11 +86,11 @@ const Page = () => {
 
           <Tabs defaultValue="applications" className="w-full">
             <TabsList className="mb-4">
-              <TabsTrigger value="applications" className="flex items-center">
+              <TabsTrigger value="applications" className="sm:text-lg text-base font-bold">
                 <Briefcase className="w-4 h-4 mr-2" />
                 Applications
               </TabsTrigger>
-              <TabsTrigger value="stats">
+              <TabsTrigger value="stats" className="sm:text-lg text-base font-blod">
                 <Briefcase className="w-4 h-4 mr-2" />
                 Statistics
               </TabsTrigger>

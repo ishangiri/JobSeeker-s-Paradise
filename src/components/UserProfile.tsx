@@ -77,7 +77,7 @@ const UserProfile: React.FC<CompanyProfileProps> = ({
     <Card style={{ backgroundColor: "#EEEE", color: "black" }} className="w-full max-w-xl mx-auto">
       <CardHeader className="space-y-1">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-2xl font-bold">Company Profile</CardTitle>
+          <CardTitle className="text-2xl font-bold">User Profile</CardTitle>
           <Button 
             variant="ghost" 
             size="icon"
@@ -137,7 +137,7 @@ const UserProfile: React.FC<CompanyProfileProps> = ({
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Company Name</FormLabel>
+                    <FormLabel>Username</FormLabel>
                     <FormControl>
                       {isEditing ? (
                         <Input {...field} className="w-full" />

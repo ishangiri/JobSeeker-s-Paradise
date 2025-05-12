@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import fetchData from '@/utils/fetchData';
 import { useUser } from '@/context/authContext';
 import { useToast } from '@/hooks/use-toast';
+import BackgroundImage from '@/components/BackgroundImage';
 
 interface signUp{
    name: string,
@@ -21,7 +22,7 @@ const Page = () => {
     const { setUserData, userData } = useUser();
     const [isLoading, setIsLoading] = useState(false);
 
-    const onsubmit = async(data: signUp) => {
+    const onSubmit = async(data: signUp) => {
        
        try{
         setIsLoading(true);
@@ -47,9 +48,12 @@ const Page = () => {
           console.log('Updated userData:', userData);
         }
       }, [userData]);
-  return (
-    <div> <SignUpForm loading={isLoading} onSubmit={onsubmit} /></div>
-  )
+      return (
+        <div className="relative min-h-screen flex flex-col space-y-10 items-center justify-center overflow-hidden">
+          <BackgroundImage />
+          <SignUpForm onSubmit={onSubmit} loading={isLoading} />
+        </div>
+      );
 }
 
 export default Page;

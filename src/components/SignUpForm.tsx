@@ -1,187 +1,156 @@
 "use client";
 
-import React from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
-import { Form, FormItem, FormLabel, FormControl, FormMessage, FormField } from "@/components/ui/form";
-import { Input } from "./ui/input";
-import Link from "next/link";
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Eye, EyeOff, Lock } from 'lucide-react';
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
-
-interface SignUpFormProps {
-    onSubmit: (data: { 
-      name : string;
-      lastName : string;
-      email: string;
-      password: string
-      location : string;
-         }) => void;
-    loading?: boolean;
-}
-
-// Define schema using Zod
-const loginSchema = z.object({
-  email: z.string().email("Invalid email address").nonempty("Email is required"),
-  password: z.string().min(6, "Password must be at least 6 characters").nonempty("Password is required"),
-  name: z.string().nonempty("Name is required"),
-  lastName: z.string().nonempty("Last Name is required"),
-  location: z.string().nonempty("Location is required"),
+// Validation schema
+const signUpSchema = z.object({
+  name: z.string().nonempty('Name is required'),
+  lastName: z.string().nonempty('Last name is required'),
+  email: z.string().email('Invalid email address'),
+  location: z.string().nonempty('Location is required'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
 });
 
-export function SignUpForm({ onSubmit, loading }: SignUpFormProps) {
-  const form = useForm({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      name : "",
-      lastName : "",
-      email: "",
-      location: "",
-      password: "",
-    },
+type SignUpValues = z.infer<typeof signUpSchema>;
+
+export function SignUpForm({ onSubmit, loading }: { onSubmit: (data: SignUpValues) => void; loading?: boolean }) {
+  const [showPassword, setShowPassword] = useState(false);
+  const form = useForm<SignUpValues>({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: { name: '', lastName: '', email: '', location: '', password: '' },
   });
 
-
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-500 to-slate-900 p-4">
-      <div className="w-full max-w-lg">
+    <div className="w-full max-w-sm bg-black/70 backdrop-blur-md rounded-xl p-8 space-y-6 text-white shadow-lg">
+      <h2 className="text-3xl font-bold text-center">Create Account</h2>
       <Form {...form}>
-  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 bg-white/70 backdrop-blur-lg p-8 rounded-2xl shadow-xl border border-white/20">
-    <div className="space-y-2 text-center">
-      <h2 className="text-3xl font-bold bg-gradient-to-r from-slate-600 to-slate-800 bg-clip-text text-transparent">
-        Create Account
-      </h2>
-      <p className="text-gray-500 text-sm">
-        Join us today and get started to find your dream job
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-sm text-gray-200">First Name</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="First Name"
+                    {...field}
+                    className="h-10 px-3 bg-gray-800 border border-gray-600 placeholder-gray-400 text-white focus:ring-2 focus:ring-blue-600"
+                  />
+                </FormControl>
+                <FormMessage className="text-blue-400 text-sm mt-1" />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-sm text-gray-200">Last Name</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Last Name"
+                    {...field}
+                    className="h-10 px-3 bg-gray-800 border border-gray-600 placeholder-gray-400 text-white focus:ring-2 focus:ring-blue-600"
+                  />
+                </FormControl>
+                <FormMessage className="text-blue-400 text-sm mt-1" />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-sm text-gray-200">Email</FormLabel>
+                <FormControl>
+                  <Input
+                    type="email"
+                    placeholder="you@example.com"
+                    {...field}
+                    className="h-10 px-3 bg-gray-800 border border-gray-600 placeholder-gray-400 text-white focus:ring-2 focus:ring-blue-600"
+                  />
+                </FormControl>
+                <FormMessage className="text-blue-400 text-sm mt-1" />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="location"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-sm text-gray-200">Location</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Your Location"
+                    {...field}
+                    className="h-10 px-3 bg-gray-800 border border-gray-600 placeholder-gray-400 text-white focus:ring-2 focus:ring-blue-600"
+                  />
+                </FormControl>
+                <FormMessage className="text-blue-400 text-sm mt-1" />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-sm text-gray-200">Password</FormLabel>
+                <FormControl>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                    <Input
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder="Password"
+                      {...field}
+                      className="h-10 pl-10 pr-10 bg-gray-800 border border-gray-600 placeholder-gray-400 text-white focus:ring-2 focus:ring-blue-600"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    >
+                      {showPassword ? <EyeOff /> : <Eye />}
+                    </button>
+                  </div>
+                </FormControl>
+                <FormMessage className="text-blue-400 text-sm mt-1" />
+              </FormItem>
+            )}
+          />
+
+          <Button
+            type="submit"
+            disabled={loading}
+            className="w-full py-2 bg-blue-600 hover:bg-blue-700 font-semibold rounded"
+          >
+            {loading ? 'Creating...' : 'Create Account'}
+          </Button>
+        </form>
+      </Form>
+
+      <p className="text-center text-sm text-gray-300">
+        Already have an account?{' '}
+        <Link href="/login" className="text-white font-medium hover:underline">
+          Sign in
+        </Link>
       </p>
-    </div>
-
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <FormField
-        control={form.control}
-        name="name"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel className="text-gray-700 font-medium">
-              Name
-            </FormLabel>
-            <FormControl>
-              <Input
-                placeholder="Your Name"
-                {...field}
-                className="h-11 bg-white/50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-              />
-            </FormControl>
-            <FormMessage className="text-red-500" />
-          </FormItem>
-        )}
-      />
-
-      <FormField
-        control={form.control}
-        name="lastName"
-        render={({ field }) => (
-          <FormItem>
-                    <FormLabel className="text-gray-700 font-medium">
-                      Last Name
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Your Last Name"
-                        {...field}
-                        className="h-11 bg-white/50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                      />
-                    </FormControl>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-gray-700 font-medium">
-                    Email
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="your.email@example.com"
-                      {...field}
-                      className="h-11 bg-white/50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-500" />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="location"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-gray-700 font-medium">
-                    Location
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Your Location"
-                      {...field}
-                      className="h-11 bg-white/50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-500" />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-gray-700 font-medium">
-                    Password
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Create a strong password"
-                      type="password"
-                      {...field}
-                      className="h-11 bg-white/50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-500" />
-                </FormItem>
-              )}
-            />
-
-            <Button
-              type="submit"
-              className="w-full h-11 bg-gradient-to-r from-slate-300 to-slate-900 text-white font-medium rounded-lg hover:from-slate-700 hover:to-slate-950 transition-all duration-200 transform hover:scale-[1.02]"
-            >
-              {loading? "Creating Your Account...." : "Create Your Account"}
-            </Button>
-
-            <div className="text-center">
-              <p className="text-gray-600">
-                Already have an account?{" "}
-                <Link 
-                  href="/login" 
-                  className="font-medium text-slate-600 hover:text-blue-950 transition-colors duration-200"
-                >
-                  Sign In
-                </Link>
-              </p>
-            </div>
-          </form>
-        </Form>
-      </div>
     </div>
   );
 }

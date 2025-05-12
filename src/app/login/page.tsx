@@ -6,6 +6,8 @@ import fetchData from '@/utils/fetchData';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { useUser } from '@/context/authContext';
+import BackgroundImage from '@/components/BackgroundImage';
+import CompanyMessage from '@/components/CompanyMessage';
 
 const Page = () => {
 
@@ -16,7 +18,7 @@ const Page = () => {
   const {toast} = useToast();
   const [isLoading, setIsLoading] = React.useState(false);
 
-    const onsubmit = async(data :object) => {
+    const onSubmit = async(data :object) => {
      try{
       console.log(data);
       setIsLoading(true);
@@ -45,12 +47,14 @@ const Page = () => {
     },[])
 
 
-  return (
-    <div className=' flex justify-center items-center min-h-screen bg-gradient-to-br from-slate-300 to-slate-900 '>
-        <SignInForm onSubmit={onsubmit} loading={isLoading} />
-       
-    </div>
-  )
+    return (
+      <div className="relative min-h-screen flex flex-col space-y-10 items-center justify-center overflow-hidden">
+        <BackgroundImage />
+        <CompanyMessage />
+        <SignInForm onSubmit={onSubmit} loading={isLoading} />
+      </div>
+    );
+  
 }
 
 export default Page

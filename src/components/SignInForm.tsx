@@ -32,120 +32,87 @@ const SignInForm = ({onSubmit, loading} : LoginFormProps) => {
 
    
 
-
-  return (
-    
-    <div className="flex items-center justify-center  p-4">
-      <div className="w-full max-w-lg">
+    return (
+      <div className="w-full max-w-sm bg-black/70 backdrop-blur-md rounded-xl p-8 space-y-6 text-white shadow-lg">
+        <h2 className="text-3xl font-bold text-center">Sign In</h2>
         <Form {...form}>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-white/70 backdrop-blur-lg p-8 rounded-2xl shadow-xl border border-white/20">
-            <div className="space-y-2 text-center">
-              <h2 className="text-3xl font-bold bg-gradient-to-r from-slate-600 to-slate-800 bg-clip-text text-transparent">
-                Jobseekers Paradise
-              </h2>
-              <p className="text-gray-500 text-sm">
-                Enter your details to sign in
-              </p>
-            </div>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm text-gray-200">Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder="you@example.com"
+                      {...field}
+                      className="h-10 px-3 bg-gray-800 border border-gray-600 placeholder-gray-400 text-white focus:ring-2 focus:ring-blue-600"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-blue-400 text-sm mt-1" />
+                </FormItem>
+              )}
+            />
   
-            <div className="space-y-4">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-gray-700 font-medium">
-                      Email
-                    </FormLabel>
-                    <FormControl>
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm text-gray-200">Password</FormLabel>
+                  <FormControl>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                       <Input
-                        placeholder="Your Email"
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder="Password"
                         {...field}
-                        className="h-11 bg-white/50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                        className="h-10 pl-10 pr-10 bg-gray-800 border border-gray-600 placeholder-gray-400 text-white focus:ring-2 focus:ring-blue-600"
                       />
-                    </FormControl>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+                      >
+                        {showPassword ? <EyeOff /> : <Eye />}
+                      </button>
+                    </div>
+                  </FormControl>
+                  <FormMessage className="text-blue-400 text-sm mt-1" />
+                </FormItem>
+              )}
+            />
   
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-gray-700 font-medium">
-                      Password
-                    </FormLabel>
-                    <FormControl>
-                      <div className="relative">
-                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                        <Input
-                          id="password"
-                          type={showPassword ? "text" : "password"}
-                          className="pl-10 pr-10 h-11 bg-white/50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                          placeholder="Your Password"
-                          {...field}
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2"
-                        >
-                          {showPassword ? (
-                            <EyeOff className="h-4 w-4 text-gray-400" />
-                          ) : (
-                            <Eye className="h-4 w-4 text-gray-400" />
-                          )}
-                        </button>
-                      </div>
-                    </FormControl>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
-            </div>
-  
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember"
-                  type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-600"
-                />
-                <label htmlFor="remember" className="ml-2 text-sm text-gray-600">
-                  Remember me
-                </label>
-              </div>
-              <a href="#" className="text-sm font-medium text-slate-600 hover:text-slate-900">
+            <div className="flex items-center justify-between text-sm">
+              <label className="flex items-center space-x-2">
+                <input type="checkbox" className="accent-blue-600" />
+                <span className="text-gray-300">Remember me</span>
+              </label>
+              <Link href="#" className="text-blue-500 hover:underline">
                 Forgot password?
-              </a>
+              </Link>
             </div>
   
             <Button
               type="submit"
-              className="w-full h-11 bg-gradient-to-r  from-slate-300 to-slate-900 text-white font-medium rounded-xl hover:from-slate-700 hover:to-slate-950 transition-all duration-200 transform hover:scale-[1.02]"
+              disabled={loading}
+              className="w-full py-2 bg-blue-600 hover:bg-blue-700 font-semibold rounded"
             >
-            {loading? "Signing in..." : "Sign In"}
+              {loading ? 'Signing in...' : 'Sign In'}
             </Button>
-  
-            <div className="text-center">
-              <p className="text-gray-600">
-                Don&apos;t have an account?{" "}
-                <Link 
-                  href="/signup" 
-                  className="font-medium text-slate-800 hover:text-blue-900 transition-colors duration-200"
-                >
-                  Sign up
-                </Link>
-              </p>
-            </div>
           </form>
         </Form>
-      </div>
-    </div>
   
-  );
+        <p className="text-center text-sm text-gray-300">
+          New to the platform?{' '}
+          <Link href="/signup" className="text-white font-medium hover:underline">
+            Sign up now
+          </Link>
+        </p>
+      </div>
+    );
   
 };
 
