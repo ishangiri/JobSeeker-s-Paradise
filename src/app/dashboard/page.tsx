@@ -20,8 +20,7 @@ useEffect(() => {
   if(!authenticated){
     router.push('/login');
    }
-   return;
-},[authenticated, router]);
+},[]);
 
   // Update filtered jobs when jobs data changes or search criteria change
   useEffect(() => {
