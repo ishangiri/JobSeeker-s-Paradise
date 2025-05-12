@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import JobContainer from "@/components/JobContainer";
 import { useJobs } from "@/context/jobsContext";
 import SearchBar from "@/components/SearchBar";
-import { useUser } from "@/context/authContext";
-import {useRouter} from "next/navigation";
+// import { useUser } from "@/context/authContext";
+// import {useRouter} from "next/navigation";
 
 export default function Home() {
   const { jobs, loading: jobsLoading } = useJobs();
@@ -12,10 +12,15 @@ export default function Home() {
   const [locationValue, setLocationValue] = useState("");
   const [filteredJobs, setFilteredJobs] = useState(jobs);
 
-  const {authenticated} = useUser();
-  const router = useRouter();
+  // const {authenticated} = useUser();
+  // const router = useRouter();
   
-
+//if not authenticated, redirect to login page
+// useEffect(() => {
+//   if(!authenticated){
+//     router.push('/login');
+//    }
+// },[]);
 
 
   // Update filtered jobs when jobs data changes or search criteria change
