@@ -15,12 +15,8 @@ export default function Home() {
   const {authenticated} = useUser();
   const router = useRouter();
   
-//if not authenticated, redirect to login page
-useEffect(() => {
-  if(!authenticated){
-    router.push('/login');
-   }
-},[]);
+
+
 
   // Update filtered jobs when jobs data changes or search criteria change
   useEffect(() => {
