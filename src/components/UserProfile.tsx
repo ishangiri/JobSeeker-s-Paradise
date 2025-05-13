@@ -69,7 +69,8 @@ const UserProfile: React.FC<CompanyProfileProps> = ({
   //authentication context
 const { authenticated } = useUser();
 
-  {authenticated && isLoading &&  (
+  if (authenticated && isLoading) {
+    return (
       <Card className="w-full max-w-xl mx-auto">
         <CardContent className="p-6">
           <div className="flex items-center justify-center h-64">
@@ -77,7 +78,7 @@ const { authenticated } = useUser();
           </div>
         </CardContent>
       </Card>
-    )
+    );
   }
 
 return (
