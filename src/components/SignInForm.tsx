@@ -7,6 +7,7 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { Form, FormField, FormItem, FormLabel, FormMessage, FormControl } from '@/components/ui/form';
+import { usePathname } from 'next/navigation';
 
 interface LoginFormProps {
     onSubmit: (data: { email: string; password: string }) =>  void;
@@ -31,8 +32,8 @@ const SignInForm = ({onSubmit, loading, job_id} : LoginFormProps) => {
 
     const { handleSubmit } = form;
 
-   
-  
+   const pathname = usePathname();
+    const shouldShowGuest = !pathname.includes(`login/${job_id}`);
 
     return (
       <div className="w-full max-w-sm bg-black/70 backdrop-blur-md rounded-xl p-8 space-y-6 text-white shadow-lg">
@@ -104,13 +105,13 @@ const SignInForm = ({onSubmit, loading, job_id} : LoginFormProps) => {
             >
               {loading ? 'Signing in...' : 'Sign In'}
             </Button>
-            {window.location.pathname.includes(`login/${job_id}`) ? "" : (   <Button 
+            {shouldShowGuest?(<Button 
             className='w-full py-2 bg-blue-600 hover:bg-blue-700 font-semibold rounded'
             >
               <Link href="/dashboard" className="w-full py-2 bg-blue-600 hover:bg-blue-700 font-semibold rounded">
                 Continue as Guest
               </Link>
-            </Button>) }
+            </Button>) : "" }
          
           </form>
         </Form>
