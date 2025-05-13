@@ -4,8 +4,8 @@ import JobStatsDashboard from "@/components/JobStatsDashboard";
 import fetchData from "@/utils/fetchData";
 import AppliedJobs from "@/components/AppliedJobs";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { AlertCircle, User, Briefcase } from "lucide-react";
+import {  User, Briefcase } from "lucide-react";
+
 
 interface ApplicantType {
   _id: string;
@@ -21,7 +21,7 @@ interface ApplicantType {
 const Page = () => {
   const [applicant, setApplicant] = useState<ApplicantType | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+
 
   useEffect(() => {
     const getApplicant = async () => {
@@ -30,10 +30,8 @@ const Page = () => {
         const response = await fetchData.get("/api/applicants/getApplicant");
         console.log("API Response:", response.data);
         setApplicant(response.data.userWIthoutpass);
-        setError(null);
       } catch (error) {
         console.error("Error fetching applicant data:", error);
-        setError("Failed to load your profile. Please refresh or try again later.");
       } finally {
         setLoading(false);
       }
@@ -54,16 +52,6 @@ const Page = () => {
     );
   }
 
-  if (error) {
-    return (
-      <div className="w-full max-w-6xl mx-auto p-4 md:p-8">
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
-      </div>
-    );
-  }
 
   return (
     <div className="w-full max-w-6xl mx-auto p-4 md:p-8">
@@ -106,7 +94,7 @@ const Page = () => {
           </Tabs>
         </>
       ) : (
-        <div className="text-center text-gray-500 py-12">
+        <div className="text-center py-12 bg-red-300">
           No profile data found. Please log in to view your dashboard.
         </div>
       )}

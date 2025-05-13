@@ -46,7 +46,7 @@ const Page = () => {
       <div className="relative min-h-screen flex flex-col space-y-10 items-center justify-center overflow-hidden">
         <BackgroundImage />
         <CompanyMessage />
-        <SignInForm onSubmit={onSubmit} loading={isLoading} />
+        <SignInForm onSubmit={onSubmit} loading={isLoading} job_id='id' />
       </div>
     );
   

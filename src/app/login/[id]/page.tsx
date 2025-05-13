@@ -66,8 +66,11 @@ const Page = () => {
 
   return (
     <div className=' flex flex-col  justify-center items-center min-h-screen bg-gradient-to-br from-slate-300 to-slate-900 '>
+      <div className='font-extrabold mb-10 text-center max-w-screen-sm h-full bg-gradient-to-br from-slate-300 to-slate-900'>
+        <h1>PLease Login to use all features of application!</h1>
+      </div>
        <JobApplyLogin position={jobtitle} company={company} />
-        <SignInForm loading={isLoading} onSubmit={onsubmit} />
+        <SignInForm loading={isLoading} onSubmit={onsubmit} job_id={Array.isArray(id) ? id[0] : id} />
        
     </div>
   )

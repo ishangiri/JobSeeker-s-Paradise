@@ -11,6 +11,7 @@ import { Form, FormField, FormItem, FormLabel, FormMessage, FormControl } from '
 interface LoginFormProps {
     onSubmit: (data: { email: string; password: string }) =>  void;
     loading: boolean;
+    job_id?: string;
 }
 
 const formSchema = z.object({
@@ -18,7 +19,7 @@ const formSchema = z.object({
   password: z.string().min(8, 'Password must be at least 8 characters')
 });
 //passing the onsubmit function as a prop
-const SignInForm = ({onSubmit, loading} : LoginFormProps) => {
+const SignInForm = ({onSubmit, loading, job_id} : LoginFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -31,6 +32,7 @@ const SignInForm = ({onSubmit, loading} : LoginFormProps) => {
     const { handleSubmit } = form;
 
    
+  
 
     return (
       <div className="w-full max-w-sm bg-black/70 backdrop-blur-md rounded-xl p-8 space-y-6 text-white shadow-lg">
@@ -102,11 +104,14 @@ const SignInForm = ({onSubmit, loading} : LoginFormProps) => {
             >
               {loading ? 'Signing in...' : 'Sign In'}
             </Button>
-            <Button>
+            {window.location.pathname.includes(`login/${job_id}`) ? "" : (   <Button 
+            className='w-full py-2 bg-blue-600 hover:bg-blue-700 font-semibold rounded'
+            >
               <Link href="/dashboard" className="w-full py-2 bg-blue-600 hover:bg-blue-700 font-semibold rounded">
                 Continue as Guest
               </Link>
-            </Button>
+            </Button>) }
+         
           </form>
         </Form>
   

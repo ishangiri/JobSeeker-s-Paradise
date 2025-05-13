@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { use } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { Camera, Edit2 } from 'lucide-react';
 import { 
@@ -19,12 +19,15 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { useUser } from '@/context/authContext';
+
 
 // Define types for the form values
 export interface UserProfileFormValues {
   name: string;
   location: string;
 }
+
 
 // Define the props interface
 interface CompanyProfileProps {
@@ -61,8 +64,12 @@ const UserProfile: React.FC<CompanyProfileProps> = ({
   resetForm,
 
 }) => {
-  if (isLoading) {
-    return (
+ 
+
+  //authentication context
+const { authenticated } = useUser();
+
+  {!authenticated ? "" :  isLoading &&  (
       <Card className="w-full max-w-xl mx-auto">
         <CardContent className="p-6">
           <div className="flex items-center justify-center h-64">
@@ -73,11 +80,12 @@ const UserProfile: React.FC<CompanyProfileProps> = ({
     );
   }
 
-  return (
-    <Card style={{ backgroundColor: "#EEEE", color: "black" }} className="w-full max-w-xl mx-auto">
-      <CardHeader className="space-y-1">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-2xl font-bold">User Profile</CardTitle>
+return (
+  <Card style={{ backgroundColor: "#EEEE", color: "black" }} className="w-full max-w-xl mx-auto">
+    <CardHeader className="space-y-1">
+      <div className="flex items-center justify-between">
+        <CardTitle className="text-2xl font-bold">User Profile</CardTitle>
+        {authenticated && (
           <Button 
             variant="ghost" 
             size="icon"
@@ -85,113 +93,128 @@ const UserProfile: React.FC<CompanyProfileProps> = ({
           >
             <Edit2 className="h-4 w-4" />
           </Button>
+        )}
+      </div>
+    </CardHeader>
+    <CardContent className="p-6">
+      <div className="flex flex-col items-center space-y-6">
+        {/* Avatar Section */}
+        <div className="relative">
+          <div className="w-32 h-32 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden border-4 border-white shadow-lg">
+            <img 
+              src={
+                imagePreview 
+                  ? imagePreview 
+                  : authenticated 
+                    ? user?.avatar 
+                    : "https://via.placeholder.com/150" // guest avatar
+              } 
+              alt="User avatar" 
+              className="w-full h-full object-cover" 
+            />
+          </div>
+          {authenticated && isEditing && (
+            <label 
+              htmlFor="avatar" 
+              className="absolute bottom-0 right-0 p-2 bg-white rounded-full shadow-lg cursor-pointer hover:bg-gray-50 border border-gray-200"
+            >
+              <Camera className="w-5 h-5 text-gray-600" />
+              <input
+                id="avatar"
+                type="file"
+                className="hidden"
+                accept="image/*"
+                onChange={onImageChange}
+              />
+            </label>
+          )}
         </div>
-      </CardHeader>
-      <CardContent className="p-6">
-        <div className="flex flex-col items-center space-y-6">
-          {/* Avatar Section */}
-          <div className="relative">
-            <div className="w-32 h-32 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden border-4 border-white shadow-lg">
-              <img 
-                src={imagePreview ? imagePreview : user?.avatar} 
-                alt="Company avatar" 
-                className="w-full h-full object-cover" 
-              />
-            </div>
-            {isEditing && (
-              <label 
-                htmlFor="avatar" 
-                className="absolute bottom-0 right-0 p-2 bg-white rounded-full shadow-lg cursor-pointer hover:bg-gray-50 border border-gray-200"
-              >
-                <Camera className="w-5 h-5 text-gray-600" />
-                <input
-                  id="avatar"
-                  type="file"
-                  className="hidden"
-                  accept="image/*"
-                  onChange={onImageChange}
-                />
-              </label>
-            )}
-          </div>
 
-          {/* Email display */}
-          <div className="text-center">
-            <p className="text-sm">Email</p>
-            <p className="font-light">{user?.email}</p>
-          </div>
-          
-          {isEditing && 
-            <Button onClick={uploadAvatar}>
-              {uploadLoading ? "Uploading Avatar..." : "Upload Avatar"}
-            </Button>
-          }
+        {/* Email display */}
+        <div className="text-center">
+          <p className="text-sm">Email</p>
+          <p className="font-light">
+            {authenticated ? user?.email : "guest@gmail.com"}
+          </p>
+        </div>
+        
+        {authenticated && isEditing && (
+          <Button onClick={uploadAvatar}>
+            {uploadLoading ? "Uploading Avatar..." : "Upload Avatar"}
+          </Button>
+        )}
 
-          <Separator className="my-4" />
+        <Separator className="my-4" />
 
-          {/* Form */}
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Username</FormLabel>
-                    <FormControl>
-                      {isEditing ? (
-                        <Input {...field} className="w-full" />
-                      ) : (
-                        <p className="font-bold pt-2">{field.value}</p>
-                      )}
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="location"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Location</FormLabel>
-                    <FormControl>
-                      {isEditing ? (
-                        <Input {...field} className="w-full" />
-                      ) : (
-                        <p className="font-bold pt-2">{field.value}</p>
-                      )}
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {isEditing && (
-                <div className="flex gap-4 text-black">
-                  <Button 
-                    type="button" 
-                    variant="outline" 
-                    className="w-full"
-                    onClick={() => {
-                      setIsEditing(false);
-                      resetForm();
-                    }}
-                  >
-                    Cancel
-                  </Button>
-                  <Button type="submit" className="w-full">
-                    Save Changes
-                  </Button>
-                </div>
+        {/* Form */}
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    {authenticated && isEditing ? (
+                      <Input {...field} className="w-full" />
+                    ) : (
+                      <p className="font-bold pt-2">
+                        {authenticated ? field.value : "Guest"}
+                      </p>
+                    )}
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
               )}
-            </form>
-          </Form>
-        </div>
-      </CardContent>
-    </Card>
-  );
+            />
+
+            <FormField
+              control={form.control}
+              name="location"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Location</FormLabel>
+                  <FormControl>
+                    {authenticated && isEditing ? (
+                      <Input {...field} className="w-full" />
+                    ) : (
+                      <p className="font-bold pt-2">
+                        {authenticated ? field.value : "Earth"}
+                      </p>
+                    )}
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {authenticated && isEditing && (
+              <div className="flex gap-4 text-black">
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => {
+                    setIsEditing(false);
+                    resetForm();
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" className="w-full">
+                  Save Changes
+                </Button>
+              </div>
+            )}
+          </form>
+        </Form>
+      </div>
+    </CardContent>
+  </Card>
+);
+
+
 };
 
 export default UserProfile;
