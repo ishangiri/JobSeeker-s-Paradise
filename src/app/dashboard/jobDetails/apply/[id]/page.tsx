@@ -46,11 +46,11 @@ export default function Page() {
       });
       setUploading(false);
       setUploadedFile(null);
-    } catch(error) {
+    } catch(error : any) {
       console.log(error);
       toast({
         variant: "destructive",
-        description: "Unable to submit application. Please try again.",
+        description: `${error.response?.data?.msg}`,
       });
       setUploading(false);
     }

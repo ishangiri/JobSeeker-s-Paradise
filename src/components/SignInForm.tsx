@@ -102,6 +102,11 @@ const SignInForm = ({onSubmit, loading} : LoginFormProps) => {
             >
               {loading ? 'Signing in...' : 'Sign In'}
             </Button>
+            <Button>
+              <Link href="/dashboard" className="w-full py-2 bg-blue-600 hover:bg-blue-700 font-semibold rounded">
+                Continue as Guest
+              </Link>
+            </Button>
           </form>
         </Form>
   
