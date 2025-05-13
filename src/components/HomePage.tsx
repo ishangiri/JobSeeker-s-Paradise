@@ -152,7 +152,7 @@ export default function Home() {
                     <div className="mt-auto">
                       <Button 
                         className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 rounded-lg shadow-sm transition-colors"
-                        onClick={() => window.location.href = "https://mern-real-zeta.vercel.app"}
+                        onClick={() => window.location.href = "https://jobseek-admin-ishan-giris-projects.vercel.app/"}
                       >
                         Access Hiring Portal
                       </Button>
